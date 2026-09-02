@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routes.extract import router as extract_router
+from app.routes.thumbnail import router as thumbnail_router
 
 app = FastAPI(
     title="V1 Video Downloader API",
@@ -8,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(extract_router)
+app.include_router(thumbnail_router)
 
 @app.get("/")
 def root():
