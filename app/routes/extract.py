@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import yt_dlp
 
 from app.services.format_filter import filter_formats
+from app.services.download_url import generate_download_urls
 
 router = APIRouter()
 
@@ -35,16 +36,17 @@ def extract_video_info(payload: ExtractRequest):
             for f in info.get("formats", [])
         ]
 
-        kind = payload.kind if hasattr(payload, "kind") else None
-        resolution = payload.resolution if hasattr(payload, "resolution") else None
+        kind = payload.kind
+        resolution = payload.resolution
 
         filtered = filter_formats(formats, kind=kind, resolution=resolution)
+        download_urls = generate_download_urls(filtered)
 
         return {
             "title": info.get("title"),
             "thumbnail": info.get("thumbnail"),
             "duration": info.get("duration"),
-            "formats": filtered,
+            "formats": download_urls,
         }
 
     except Exception as e:
