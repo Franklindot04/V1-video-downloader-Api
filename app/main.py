@@ -6,6 +6,7 @@ from app.routes.ping import router as ping_router
 from app.routes.info import router as info_router
 from app.routes.stats import router as stats_router
 from app.routes.player import router as player_router
+from app.routes.formats import router as formats_router
 
 app = FastAPI(
     title="V1 Video Downloader API",
@@ -20,6 +21,7 @@ app.include_router(ping_router)
 app.include_router(info_router)
 app.include_router(stats_router)
 app.include_router(player_router)
+app.include_router(formats_router)
 
 @app.get("/")
 def root():
