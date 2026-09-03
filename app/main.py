@@ -9,6 +9,7 @@ from app.routes.player import router as player_router
 from app.routes.formats import router as formats_router
 from app.routes.uploader import router as uploader_router
 from app.routes.duration import router as duration_router
+from app.routes.title import router as title_router
 
 app = FastAPI(
     title="V1 Video Downloader API",
@@ -26,7 +27,7 @@ app.include_router(player_router)
 app.include_router(formats_router)
 app.include_router(uploader_router)
 app.include_router(duration_router)
-
+app.include_router(title_router)
 
 @app.get("/")
 def root():
