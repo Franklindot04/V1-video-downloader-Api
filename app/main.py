@@ -15,6 +15,7 @@ from app.routes.thumbnail_info import router as thumbnail_info_router
 from app.routes.keywords import router as keywords_router
 from app.routes.captions import router as captions_router
 from app.routes.chapters import router as chapters_router
+from app.routes.playlist_info import router as playlist_info_router
 
 
 app = FastAPI(
@@ -40,6 +41,7 @@ app.include_router(thumbnail_info_router)
 app.include_router(keywords_router)
 app.include_router(captions_router)
 app.include_router(chapters_router)
+app.include_router(playlist_info_router)
 
 
 @app.get("/")
