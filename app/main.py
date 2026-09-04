@@ -13,12 +13,15 @@ from app.routes.title import router as title_router
 from app.routes.description import router as description_router
 from app.routes.thumbnail_info import router as thumbnail_info_router
 from app.routes.keywords import router as keywords_router
+from app.routes.captions import router as captions_router
+
 
 app = FastAPI(
     title="V1 Video Downloader API",
     version="1.0.0",
     description="A simple API for extracting video metadata and download links."
 )
+
 
 app.include_router(extract_router)
 app.include_router(thumbnail_router)
@@ -34,6 +37,8 @@ app.include_router(title_router)
 app.include_router(description_router)
 app.include_router(thumbnail_info_router)
 app.include_router(keywords_router)
+app.include_router(captions_router)
+
 
 @app.get("/")
 def root():
