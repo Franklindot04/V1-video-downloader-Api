@@ -28,6 +28,7 @@ from app.routes.format_filter import router as format_filter_router
 from app.routes.endpoints import router as endpoints_router
 from app.routes.format_summary import router as format_summary_router
 from app.routes.download_plan import router as download_plan_router
+from app.routes.format_map import router as format_map_router
 
 
 app = FastAPI(
@@ -66,6 +67,7 @@ app.include_router(format_filter_router)
 app.include_router(endpoints_router)
 app.include_router(format_summary_router)
 app.include_router(download_plan_router)
+app.include_router(format_map_router)
 
 
 @app.get("/")
