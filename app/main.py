@@ -34,6 +34,7 @@ from app.routes.download_options import router as download_options_router
 from app.routes.download_start import router as download_start_router
 from app.routes.download_info import router as download_info_router
 from app.routes.download_validate import router as download_validate_router
+from app.routes.download_flow import router as download_flow_router
 
 
 app = FastAPI(
@@ -78,6 +79,7 @@ app.include_router(download_options_router)
 app.include_router(download_start_router)
 app.include_router(download_info_router)
 app.include_router(download_validate_router)
+app.include_router(download_flow_router)
 
 
 @app.get("/")
