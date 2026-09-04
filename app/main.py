@@ -23,6 +23,7 @@ from app.routes.best_format import router as best_format_router
 from app.routes.audio_only import router as audio_only_router
 from app.routes.video_only import router as video_only_router
 from app.routes.download_url import router as download_url_router
+from app.routes.merge_best import router as merge_best_router
 
 
 app = FastAPI(
@@ -56,6 +57,7 @@ app.include_router(best_format_router)
 app.include_router(audio_only_router)
 app.include_router(video_only_router)
 app.include_router(download_url_router)
+app.include_router(merge_best_router)
 
 
 @app.get("/")
