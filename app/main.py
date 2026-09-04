@@ -12,6 +12,7 @@ from app.routes.duration import router as duration_router
 from app.routes.title import router as title_router
 from app.routes.description import router as description_router
 from app.routes.thumbnail_info import router as thumbnail_info_router
+from app.routes.keywords import router as keywords_router
 
 app = FastAPI(
     title="V1 Video Downloader API",
@@ -32,6 +33,7 @@ app.include_router(duration_router)
 app.include_router(title_router)
 app.include_router(description_router)
 app.include_router(thumbnail_info_router)
+app.include_router(keywords_router)
 
 @app.get("/")
 def root():
