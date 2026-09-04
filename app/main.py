@@ -17,6 +17,7 @@ from app.routes.captions import router as captions_router
 from app.routes.chapters import router as chapters_router
 from app.routes.playlist_info import router as playlist_info_router
 from app.routes.live_status import router as live_status_router
+from app.routes.age_rating import router as age_rating_router
 
 
 app = FastAPI(
@@ -44,6 +45,7 @@ app.include_router(captions_router)
 app.include_router(chapters_router)
 app.include_router(playlist_info_router)
 app.include_router(live_status_router)
+app.include_router(age_rating_router)
 
 
 @app.get("/")
