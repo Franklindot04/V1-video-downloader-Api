@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: v1-video-downloader-api
+    env: docker
+    plan: starter
+    autoDeploy: true
+
+    dockerfilePath: ./Dockerfile
+
+    envVars:
+      - key: PORT
+        value: 8000
+
+    healthCheckPath: /endpoints
+
+    # Optional autoscaling
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+      targetCPUPercent: 70
