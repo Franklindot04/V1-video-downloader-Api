@@ -40,7 +40,7 @@ from app.routes.download_session import router as download_session_router
 from app.monitoring import MetricsMiddleware
 from app.rate_limit import RateLimitMiddleware
 from app.routes.metrics import router as metrics_router
-
+from app.local_routes import register_local_worker_routes
 
 app = FastAPI(
     title="V1 Video Downloader API",
@@ -92,6 +92,9 @@ app.include_router(download_validate_router)
 app.include_router(download_flow_router)
 app.include_router(download_manifest_router)
 app.include_router(download_session_router)
+
+
+register_local_worker_routes(app)
 
 
 @app.get("/")

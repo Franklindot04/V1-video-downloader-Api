@@ -5,3 +5,4 @@ pydantic
 gunicorn
 prometheus-client
 redis
+rq
