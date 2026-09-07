@@ -13,4 +13,3 @@ queues = [Queue("downloads", connection=redis_connection)]
 if __name__ == "__main__":
     worker = Worker(queues, connection=redis_connection)
     worker.work(with_scheduler=True)
-    
