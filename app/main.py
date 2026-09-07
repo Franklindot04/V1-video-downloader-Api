@@ -37,6 +37,8 @@ from app.routes.download_validate import router as download_validate_router
 from app.routes.download_flow import router as download_flow_router
 from app.routes.download_manifest import router as download_manifest_router
 from app.routes.download_session import router as download_session_router
+from app.monitoring import MetricsMiddleware
+from app.routes.metrics import router as metrics_router
 
 
 app = FastAPI(
@@ -44,6 +46,9 @@ app = FastAPI(
     version="1.0.0",
     description="A simple API for extracting video metadata and download links."
 )
+
+
+app.add_middleware(MetricsMiddleware)
 
 
 app.include_router(extract_router)
@@ -72,6 +77,7 @@ app.include_router(video_only_router)
 app.include_router(download_url_router)
 app.include_router(merge_best_router)
 app.include_router(format_filter_router)
+app.include_router(metrics_router)
 app.include_router(endpoints_router)
 app.include_router(format_summary_router)
 app.include_router(download_plan_router)
