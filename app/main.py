@@ -38,6 +38,7 @@ from app.routes.download_flow import router as download_flow_router
 from app.routes.download_manifest import router as download_manifest_router
 from app.routes.download_session import router as download_session_router
 from app.monitoring import MetricsMiddleware
+from app.rate_limit import RateLimitMiddleware
 from app.routes.metrics import router as metrics_router
 
 
@@ -48,6 +49,7 @@ app = FastAPI(
 )
 
 
+app.add_middleware(RateLimitMiddleware)
 app.add_middleware(MetricsMiddleware)
 
 
