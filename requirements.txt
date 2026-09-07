@@ -4,3 +4,4 @@ yt-dlp
 pydantic
 gunicorn
 prometheus-client
+redis
