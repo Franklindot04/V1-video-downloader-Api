@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis:7-alpine
+
+  api:
+    build: .
+    command: python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      ENABLE_LOCAL_WORKER_ROUTES: "true"
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: python worker.py
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - redis
