@@ -7,7 +7,7 @@ router = APIRouter()
 class FormatsRequest(BaseModel):
     url: str
 
-@router.post("/formats")
+@router.post("/formats", tags=["Formats"])
 def get_formats(payload: FormatsRequest):
     try:
         ydl_opts = {

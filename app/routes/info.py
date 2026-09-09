@@ -7,7 +7,7 @@ router = APIRouter()
 class InfoRequest(BaseModel):
     url: str
 
-@router.post("/info")
+@router.post("/info", tags=["Metadata"])
 def get_info(payload: InfoRequest):
     try:
         ydl_opts = {

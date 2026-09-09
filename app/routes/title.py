@@ -7,7 +7,7 @@ router = APIRouter()
 class TitleRequest(BaseModel):
     url: str
 
-@router.post("/title")
+@router.post("/title", tags=["Metadata"])
 def get_title(payload: TitleRequest):
     try:
         ydl_opts = {

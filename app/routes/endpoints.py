@@ -3,7 +3,7 @@ from fastapi.routing import APIRoute
 
 router = APIRouter()
 
-@router.get("/endpoints")
+@router.get("/endpoints", tags=["System"])
 def list_endpoints():
     try:
         from app.main import app

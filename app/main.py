@@ -1,8 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 
+
 from starlette.middleware import Middleware
 from starlette.middleware.body_limit import RequestBodyLimitMiddleware
+
+
+from app.docs import TAGS_METADATA
+from app.docs_ui import router as docs_ui_router
+from app.openapi import configure_openapi
+
 
 from app.errors import (
     http_error_handler,
@@ -58,10 +65,12 @@ from app.local_routes import register_local_worker_routes
 
 configure_logging()
 
+
 app = FastAPI(
     title="V1 Video Downloader API",
     version="1.0.0",
     description="A simple API for extracting video metadata and download links.",
+    openapi_tags=TAGS_METADATA,
     middleware=[
         Middleware(
             RequestBodyLimitMiddleware,
@@ -71,11 +80,26 @@ app = FastAPI(
 )
 
 
+configure_openapi(app)
+app.include_router(docs_ui_router)
+
+
 add_cors(app)
 
-app.add_middleware(SecurityHeadersMiddleware)
+
+class DocsExemptSecurityHeadersMiddleware(SecurityHeadersMiddleware):
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http" and scope["path"] == "/docs":
+            # Skip security headers for Swagger UI so it can load CSS/JS
+            await self.app(scope, receive, send)
+            return
+        await super().__call__(scope, receive, send)
+
+
+app.add_middleware(DocsExemptSecurityHeadersMiddleware)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(MetricsMiddleware)
+
 
 app.add_exception_handler(HTTPException, http_error_handler)
 app.add_exception_handler(RequestValidationError, validation_error_handler)
@@ -122,7 +146,9 @@ app.include_router(download_flow_router)
 app.include_router(download_manifest_router)
 app.include_router(download_session_router)
 
+
 register_local_worker_routes(app)
+
 
 @app.get("/")
 def root():

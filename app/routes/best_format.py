@@ -7,7 +7,7 @@ router = APIRouter()
 class BestFormatRequest(BaseModel):
     url: str
 
-@router.post("/best-format")
+@router.post("/best-format", tags=["Formats"])
 def get_best_format(payload: BestFormatRequest):
     try:
         ydl_opts = {

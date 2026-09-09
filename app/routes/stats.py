@@ -7,7 +7,7 @@ router = APIRouter()
 class StatsRequest(BaseModel):
     url: str
 
-@router.post("/stats")
+@router.post("/stats", tags=["System"])
 def get_stats(payload: StatsRequest):
     try:
         ydl_opts = {

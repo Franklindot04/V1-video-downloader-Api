@@ -7,7 +7,7 @@ router = APIRouter()
 class UploaderRequest(BaseModel):
     url: str
 
-@router.post("/uploader")
+@router.post("/uploader", tags=["Metadata"])
 def get_uploader(payload: UploaderRequest):
     try:
         ydl_opts = {
