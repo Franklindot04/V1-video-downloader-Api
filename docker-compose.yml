@@ -10,6 +10,8 @@ services:
     environment:
       REDIS_URL: redis://redis:6379/0
       ENABLE_LOCAL_WORKER_ROUTES: "true"
+    volumes:
+      - ./downloads:/app/downloads
     depends_on:
       - redis
 
@@ -18,5 +20,7 @@ services:
     command: python worker.py
     environment:
       REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./downloads:/app/downloads
     depends_on:
       - redis
