@@ -71,7 +71,6 @@ app = FastAPI(
 )
 
 
-
 add_cors(app)
 
 app.add_middleware(SecurityHeadersMiddleware)
