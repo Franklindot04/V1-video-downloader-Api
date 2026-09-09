@@ -7,7 +7,7 @@ router = APIRouter()
 class AudioOnlyRequest(BaseModel):
     url: str
 
-@router.post("/audio-only")
+@router.post("/audio-only", tags=["Formats"])
 def get_audio_only(payload: AudioOnlyRequest):
     try:
         ydl_opts = {

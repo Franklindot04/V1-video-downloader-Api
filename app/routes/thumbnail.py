@@ -7,7 +7,7 @@ router = APIRouter()
 class ThumbnailRequest(BaseModel):
     url: str
 
-@router.post("/thumbnail")
+@router.post("/thumbnail", tags=["Thumbnails"])
 def get_thumbnail(payload: ThumbnailRequest):
     try:
         ydl_opts = {

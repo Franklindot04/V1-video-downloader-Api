@@ -7,7 +7,7 @@ router = APIRouter()
 class ThumbnailInfoRequest(BaseModel):
     url: str
 
-@router.post("/thumbnail-info")
+@router.post("/thumbnail-info", tags=["Thumbnails"])
 def get_thumbnail_info(payload: ThumbnailInfoRequest):
     try:
         ydl_opts = {
@@ -21,7 +21,7 @@ def get_thumbnail_info(payload: ThumbnailInfoRequest):
         return {
             "thumbnail": info.get("thumbnail"),
             "thumbnail_id": info.get("thumbnail_id"),
-            "thumbnails": info.get("thumbnails"),  # yt-dlp sometimes returns multiple
+            "thumbnails": info.get("thumbnails"),
         }
 
     except Exception as e:

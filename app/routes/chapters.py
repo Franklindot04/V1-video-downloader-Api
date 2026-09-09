@@ -7,7 +7,7 @@ router = APIRouter()
 class ChaptersRequest(BaseModel):
     url: str
 
-@router.post("/chapters")
+@router.post("/chapters", tags=["Captions"])
 def get_chapters(payload: ChaptersRequest):
     try:
         ydl_opts = {

@@ -14,7 +14,7 @@ def format_duration(seconds: int | None):
     h, m = divmod(m, 60)
     return f"{h:02d}:{m:02d}:{s:02d}"
 
-@router.post("/duration")
+@router.post("/duration", tags=["Metadata"])
 def get_duration(payload: DurationRequest):
     try:
         ydl_opts = {

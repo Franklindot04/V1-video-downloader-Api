@@ -7,7 +7,48 @@ router = APIRouter()
 class CaptionsRequest(BaseModel):
     url: str
 
-@router.post("/captions")
+@router.post(
+    "/captions",
+    tags=["Captions"],
+    summary="Get available caption tracks",
+    description=(
+        "Returns manual subtitle tracks and automatic captions "
+        "when they are available for a supported video URL."
+    ),
+    responses={
+        200: {
+            "description": "Caption metadata",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "subtitles": {
+                            "en": [
+                                {
+                                    "ext": "vtt",
+                                    "url": (
+                                        "https://example.com/"
+                                        "subtitles/en.vtt"
+                                    ),
+                                }
+                            ]
+                        },
+                        "automatic_captions": {
+                            "en": [
+                                {
+                                    "ext": "vtt",
+                                    "url": (
+                                        "https://example.com/"
+                                        "captions/en.vtt"
+                                    ),
+                                }
+                            ]
+                        },
+                    }
+                }
+            },
+        }
+    },
+)
 def get_captions(payload: CaptionsRequest):
     try:
         ydl_opts = {

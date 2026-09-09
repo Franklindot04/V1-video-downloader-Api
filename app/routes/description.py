@@ -7,7 +7,7 @@ router = APIRouter()
 class DescriptionRequest(BaseModel):
     url: str
 
-@router.post("/description")
+@router.post("/description", tags=["Metadata"])
 def get_description(payload: DescriptionRequest):
     try:
         ydl_opts = {

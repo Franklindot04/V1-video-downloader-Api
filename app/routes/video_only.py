@@ -7,7 +7,7 @@ router = APIRouter()
 class VideoOnlyRequest(BaseModel):
     url: str
 
-@router.post("/video-only")
+@router.post("/video-only", tags=["Formats"])
 def get_video_only(payload: VideoOnlyRequest):
     try:
         ydl_opts = {
