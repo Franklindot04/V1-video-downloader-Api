@@ -1,4 +1,17 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.exceptions import RequestValidationError
+
+from starlette.middleware import Middleware
+from starlette.middleware.body_limit import RequestBodyLimitMiddleware
+
+from app.errors import (
+    http_error_handler,
+    server_error_handler,
+    validation_error_handler,
+)
+from app.logging_config import configure_logging
+from app.security import add_cors
+from app.security_headers import SecurityHeadersMiddleware
 from app.routes.extract import router as extract_router
 from app.routes.thumbnail import router as thumbnail_router
 from app.routes.system import router as system_router
@@ -42,15 +55,32 @@ from app.rate_limit import RateLimitMiddleware
 from app.routes.metrics import router as metrics_router
 from app.local_routes import register_local_worker_routes
 
+
+configure_logging()
+
 app = FastAPI(
     title="V1 Video Downloader API",
     version="1.0.0",
-    description="A simple API for extracting video metadata and download links."
+    description="A simple API for extracting video metadata and download links.",
+    middleware=[
+        Middleware(
+            RequestBodyLimitMiddleware,
+            max_body_size=2 * 1024 * 1024,
+        ),
+    ],
 )
 
 
+
+add_cors(app)
+
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(MetricsMiddleware)
+
+app.add_exception_handler(HTTPException, http_error_handler)
+app.add_exception_handler(RequestValidationError, validation_error_handler)
+app.add_exception_handler(Exception, server_error_handler)
 
 
 app.include_router(extract_router)
@@ -93,9 +123,7 @@ app.include_router(download_flow_router)
 app.include_router(download_manifest_router)
 app.include_router(download_session_router)
 
-
 register_local_worker_routes(app)
-
 
 @app.get("/")
 def root():
