@@ -10,6 +10,9 @@ from app.docs import TAGS_METADATA
 from app.docs_ui import router as docs_ui_router
 from app.openapi import configure_openapi
 
+from app.compression import add_compression
+from app.lifespan import lifespan
+
 
 from app.errors import (
     http_error_handler,
@@ -71,6 +74,7 @@ app = FastAPI(
     version="1.0.0",
     description="A simple API for extracting video metadata and download links.",
     openapi_tags=TAGS_METADATA,
+    lifespan=lifespan,
     middleware=[
         Middleware(
             RequestBodyLimitMiddleware,
@@ -100,6 +104,7 @@ app.add_middleware(DocsExemptSecurityHeadersMiddleware)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(MetricsMiddleware)
 
+add_compression(app)
 
 app.add_exception_handler(HTTPException, http_error_handler)
 app.add_exception_handler(RequestValidationError, validation_error_handler)

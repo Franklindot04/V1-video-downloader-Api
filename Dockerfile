@@ -32,4 +32,5 @@ USER appuser
 EXPOSE 8000
 
 # Gunicorn + Uvicorn workers
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-w", "4", "-b", "0.0.0.0:8000", "app.main:app"]
+# Gunicorn + Uvicorn workers
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-w", "2", "--timeout", "30", "-b", "0.0.0.0:8000", "app.main:app"]
