@@ -65,6 +65,8 @@ from app.rate_limit import RateLimitMiddleware
 from app.routes.metrics import router as metrics_router
 from app.local_routes import register_local_worker_routes
 
+from app.auth import APIKeyMiddleware
+from app.abuse import AbuseMiddleware
 
 configure_logging()
 
@@ -105,6 +107,9 @@ app.add_middleware(RateLimitMiddleware)
 app.add_middleware(MetricsMiddleware)
 
 add_compression(app)
+
+app.add_middleware(APIKeyMiddleware)
+app.add_middleware(AbuseMiddleware)
 
 app.add_exception_handler(HTTPException, http_error_handler)
 app.add_exception_handler(RequestValidationError, validation_error_handler)
