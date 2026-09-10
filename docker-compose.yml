@@ -10,6 +10,7 @@ services:
     environment:
       REDIS_URL: redis://redis:6379/0
       ENABLE_LOCAL_WORKER_ROUTES: "true"
+      API_KEY: ${API_KEY:-}
     volumes:
       - ./downloads:/app/downloads
     depends_on:
